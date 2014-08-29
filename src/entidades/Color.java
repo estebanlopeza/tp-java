@@ -16,4 +16,7 @@ public class Color {
 		return nombre;
 	}
 	
+	public String toString(){
+		return this.nombre;
+	}
 }

@@ -3,15 +3,15 @@ package negocio;
 import javax.swing.JOptionPane;
 
 import entidades.*;
-import datos.DatosTelevision;
+import datos.DatosLavarropas;
 
-public class NegocioTelevision {
+public class NegocioLavarropas {
 	
-	public void registrar(Television tele)
+	public void registrar(Lavarropas lava)
     {
         try
         {
-            DatosTelevision.registrar(tele);
+            DatosLavarropas.registrar(lava);
         }
         catch(Exception ex)
         {

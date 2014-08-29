@@ -21,5 +21,8 @@ public class Consumo {
 	public int getPrecio() {
 		return precio;
 	}
-	
+
+	public String toString(){
+		return Character.toString(this.letra);
+	}
 }

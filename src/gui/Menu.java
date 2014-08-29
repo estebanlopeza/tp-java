@@ -29,6 +29,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 
+import negocio.NegocioLavarropas;
+import negocio.NegocioTelevision;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -39,8 +42,8 @@ public class Menu extends JFrame {
 	private JSpinner spnResolucion;
 	private JCheckBox chkSintonizadorDTD;
 	private JComboBox<String> cboTipoElectrodomestico;
-	private JComboBox<String> cboColor;
-	private JComboBox<String> cboConsumo;
+	private JComboBox<Color> cboColor;
+	private JComboBox<Consumo> cboConsumo;
 	private JSpinner spnPrecioBase;
 	private JSpinner spnPeso;
 
@@ -81,7 +84,7 @@ public class Menu extends JFrame {
 		
 		ActionListener seleccionartipoListener = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-                JComboBox<String> comboBox = (JComboBox) event.getSource();
+                JComboBox<String> comboBox = (JComboBox)event.getSource();
 
 				if(event.getActionCommand().equals("comboBoxChanged")){
 	                String selected = comboBox.getSelectedItem().toString();
@@ -106,12 +109,18 @@ public class Menu extends JFrame {
 							(int)spnResolucion.getValue(), 
 							chkSintonizadorDTD.isSelected(), 
 							(int)spnPrecioBase.getValue(), 
-							new Color((String)cboColor.getSelectedItem()), 
-							(char)cboConsumo.getSelectedItem(),
-							(int)spnPeso.getValue()
-						);
+							(Color)cboColor.getSelectedItem(), 
+							(Consumo)cboConsumo.getSelectedItem(),
+							(int)spnPeso.getValue());
+					new NegocioTelevision().registrar(tele);
 				}else{
-					JOptionPane.showMessageDialog(null, "Lavarr");
+					Lavarropas lava = new Lavarropas(
+							(int)spnCarga.getValue(),  
+							(int)spnPrecioBase.getValue(), 
+							(Color)cboColor.getSelectedItem(), 
+							(Consumo)cboConsumo.getSelectedItem(),
+							(int)spnPeso.getValue());
+					new NegocioLavarropas().registrar(lava);
 				}
 			}
 		};
@@ -137,7 +146,7 @@ public class Menu extends JFrame {
 		lblColor.setBounds(23, 67, 129, 14);
 		contentPane.add(lblColor);
 		
-		cboColor = new JComboBox<String>();
+		cboColor = new JComboBox<Color>();
 		cboColor.setBounds(162, 64, 140, 20);
 		contentPane.add(cboColor);
 		
@@ -145,7 +154,7 @@ public class Menu extends JFrame {
 		lblConsumo.setBounds(23, 95, 129, 14);
 		contentPane.add(lblConsumo);
 		
-		cboConsumo = new JComboBox<String>();
+		cboConsumo = new JComboBox<Consumo>();
 		cboConsumo.setBounds(162, 92, 140, 20);
 		contentPane.add(cboConsumo);
 		
@@ -202,12 +211,12 @@ public class Menu extends JFrame {
 		cboTipoElectrodomestico.setSelectedIndex(0);
 		
 		for(Color color : CatColor.COLOR){
-			cboColor.addItem(color.getNombre());
+			cboColor.addItem(color);
 		}
 		cboColor.setSelectedItem(Electrodomestico.COLOR);
 		
 		for(Consumo consumo : CatConsumo.CONSUMO){
-			cboConsumo.addItem(Character.toString(consumo.getLetra()));
+			cboConsumo.addItem(consumo);
 		}
 		cboConsumo.setSelectedItem(Electrodomestico.CONSUMO);
 		
