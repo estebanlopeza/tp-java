@@ -12,17 +12,23 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 import entidades.Color;
 import entidades.CatColor;
 import entidades.Consumo;
 import entidades.CatConsumo;
+import entidades.Electrodomestico;
+import entidades.Lavarropas;
+import entidades.Television;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -32,6 +38,11 @@ public class Menu extends JFrame {
 	private JSpinner spnCarga;
 	private JSpinner spnResolucion;
 	private JCheckBox chkSintonizadorDTD;
+	private JComboBox<String> cboTipoElectrodomestico;
+	private JComboBox<String> cboColor;
+	private JComboBox<String> cboConsumo;
+	private JSpinner spnPrecioBase;
+	private JSpinner spnPeso;
 
 	/**
 	 * Launch the application.
@@ -66,9 +77,9 @@ public class Menu extends JFrame {
 		lblTipo.setBounds(23, 39, 129, 14);
 		contentPane.add(lblTipo);
 		
-		JComboBox<String> cboTipoElectrodomestico = new JComboBox<String>();
+		cboTipoElectrodomestico = new JComboBox<String>();
 		
-		ActionListener tipoElectrodomesticoListener = new ActionListener() {
+		ActionListener seleccionartipoListener = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
                 JComboBox<String> comboBox = (JComboBox) event.getSource();
 
@@ -87,6 +98,24 @@ public class Menu extends JFrame {
 			}
 		};
 		
+		ActionListener registrarListener = new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(cboTipoElectrodomestico.getSelectedItem().equals("Television")){
+					Television tele = new Television(
+							(int)spnResolucion.getValue(), 
+							chkSintonizadorDTD.isSelected(), 
+							(int)spnPrecioBase.getValue(), 
+							new Color((String)cboColor.getSelectedItem()), 
+							(char)cboConsumo.getSelectedItem(),
+							(int)spnPeso.getValue()
+						);
+				}else{
+					JOptionPane.showMessageDialog(null, "Lavarr");
+				}
+			}
+		};
+		
 		cboTipoElectrodomestico.setBounds(162, 36, 140, 20);
 		contentPane.add(cboTipoElectrodomestico);
 		cboTipoElectrodomestico.addItem("Lavarropas");
@@ -96,7 +125,7 @@ public class Menu extends JFrame {
 		lblPrecioBase.setBounds(23, 123, 129, 14);
 		contentPane.add(lblPrecioBase);
 		
-		JSpinner spnPrecioBase = new JSpinner();
+		spnPrecioBase = new JSpinner();
 		spnPrecioBase.setBounds(162, 120, 48, 20);
 		contentPane.add(spnPrecioBase);
 		
@@ -108,7 +137,7 @@ public class Menu extends JFrame {
 		lblColor.setBounds(23, 67, 129, 14);
 		contentPane.add(lblColor);
 		
-		JComboBox<String> cboColor = new JComboBox<String>();
+		cboColor = new JComboBox<String>();
 		cboColor.setBounds(162, 64, 140, 20);
 		contentPane.add(cboColor);
 		
@@ -116,7 +145,7 @@ public class Menu extends JFrame {
 		lblConsumo.setBounds(23, 95, 129, 14);
 		contentPane.add(lblConsumo);
 		
-		JComboBox<String> cboConsumo = new JComboBox();
+		cboConsumo = new JComboBox<String>();
 		cboConsumo.setBounds(162, 92, 140, 20);
 		contentPane.add(cboConsumo);
 		
@@ -128,7 +157,7 @@ public class Menu extends JFrame {
 		lblUnidadPeso.setBounds(220, 151, 46, 14);
 		contentPane.add(lblUnidadPeso);
 		
-		JSpinner spnPeso = new JSpinner();
+		spnPeso = new JSpinner();
 		spnPeso.setBounds(162, 148, 48, 20);
 		contentPane.add(spnPeso);
 		
@@ -163,27 +192,29 @@ public class Menu extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(430, 281, 89, 23);
 		contentPane.add(btnGuardar);
-		
+
+
 		/*Listeners*/
-		cboTipoElectrodomestico.addActionListener(tipoElectrodomesticoListener);
+		cboTipoElectrodomestico.addActionListener(seleccionartipoListener);
+		btnGuardar.addActionListener(registrarListener);
 		
 		/*Carga de valores*/
-		cboTipoElectrodomestico.setSelectedItem("Lavarropas");
+		cboTipoElectrodomestico.setSelectedIndex(0);
 		
 		for(Color color : CatColor.COLOR){
 			cboColor.addItem(color.getNombre());
 		}
-		cboColor.setSelectedItem("blanco");
+		cboColor.setSelectedItem(Electrodomestico.COLOR);
 		
 		for(Consumo consumo : CatConsumo.CONSUMO){
 			cboConsumo.addItem(Character.toString(consumo.getLetra()));
 		}
-		cboConsumo.setSelectedItem("F");
+		cboConsumo.setSelectedItem(Electrodomestico.CONSUMO);
 		
-		spnPrecioBase.setValue(100);
-		spnPeso.setValue(5);
-		spnCarga.setValue(5);
-		spnResolucion.setValue(20);
+		spnPrecioBase.setValue(Electrodomestico.PRECIO_BASE);
+		spnPeso.setValue(Electrodomestico.PESO);
+		spnCarga.setValue(Lavarropas.CARGA);
+		spnResolucion.setValue(Television.RESOLUCION);
 		
 	}
 }

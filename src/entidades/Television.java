@@ -7,8 +7,8 @@ public class Television extends Electrodomestico {
 	private boolean sintonizadorDTD;
 	
 	/*Valores x defecto*/
-	static final int RESOLUCION = 20;
-	static final boolean SINTONIZADORDTD = false;
+	public static final int RESOLUCION = 20;
+	public static final boolean SINTONIZADORDTD = false;
 
 	/*Constructores*/	
 	public Television(int resolucion, boolean sintonizadorDTD, int precio, Color color, Consumo consumo, int peso){

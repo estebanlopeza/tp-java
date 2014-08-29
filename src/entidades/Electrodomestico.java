@@ -9,10 +9,10 @@ public abstract class Electrodomestico {
 	private int peso;
 
 	/*Valores x defecto*/
-	static final int PRECIO_BASE = 100;
-	static final Color COLOR = new Color();
-	static final Consumo CONSUMO = new Consumo();
-	static final char PESO = 5;
+	public static final int PRECIO_BASE = 100;
+	public static final Color COLOR = new Color();
+	public static final Consumo CONSUMO = new Consumo();
+	public static final int PESO = 5;
 
 	/*Constructores*/
 	public Electrodomestico(int precio, Color color, Consumo consumo, int peso){

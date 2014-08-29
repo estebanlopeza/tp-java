@@ -6,7 +6,7 @@ public class Lavarropas extends Electrodomestico {
 	private int carga;
 	
 	/*Valores x defecto*/
-	static final int CARGA = 5;
+	public static final int CARGA = 5;
 	
 	/*Constructores*/	
 	public Lavarropas(int carga, int precio, Color color, Consumo consumo, int peso){
