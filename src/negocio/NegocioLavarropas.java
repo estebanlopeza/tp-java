@@ -11,7 +11,8 @@ public class NegocioLavarropas {
     {
         try
         {
-            DatosLavarropas.registrar(lava);
+        	DatosLavarropas dl = new DatosLavarropas();
+        	dl.registrar(lava);
         }
         catch(Exception ex)
         {
