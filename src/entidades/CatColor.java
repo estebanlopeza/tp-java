@@ -9,4 +9,13 @@ public class CatColor {
 		new Color("azul"),
 		new Color("gris")
 	};
+
+	public static Color getColor(String nombre){
+		for (Color c: COLOR) {
+			if( c.getNombre().equals(nombre) ){
+				return c;
+			}
+		}
+		return new Color(nombre);
+	}
 }

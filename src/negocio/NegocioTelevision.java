@@ -7,15 +7,27 @@ import datos.DatosTelevision;
 
 public class NegocioTelevision {
 	
-	public void registrar(Television tele)
+	public Object[] registrar(Television tele)
     {
         try
         {
-            DatosTelevision.registrar(tele);
+        	DatosTelevision dl = new DatosTelevision();
+        	dl.registrar(tele);
         }
         catch(Exception ex)
         {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+		Object[] row = {
+				"Television",
+				tele.getColor().getNombre(),
+				Character.toString(tele.getConsumo().getLetra()),
+				tele.precioFinal(),
+				tele.getPeso(),
+				"-",
+				tele.getResolucion(),
+				(tele.isSintonizadorDTD())?"si":"no"
+		};
+		return row;
     }
 }

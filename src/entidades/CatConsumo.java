@@ -1,4 +1,5 @@
 package entidades;
+import javax.swing.JOptionPane;
 
 public class CatConsumo {
 	
@@ -10,4 +11,13 @@ public class CatConsumo {
 		new Consumo('E',30),
 		new Consumo('F',10)
 	};
+
+	public static Consumo getConsumo(char letra){
+		for (Consumo c: CONSUMO) {
+			if( Character.compare(c.getLetra(), letra) == 0 ){
+				return c;
+			}
+		}
+		return new Consumo(letra,0);
+	}
 }

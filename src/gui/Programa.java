@@ -43,6 +43,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 public class Programa extends JFrame {
 
 	private JPanel contentPane;
@@ -199,6 +201,14 @@ public class Programa extends JFrame {
 		
 		popularLista();
 
+		tableListar = new JTable(tableModel);
+		tableListar.setBounds(0, 0, 0, 0);
+		tableListar.setFillsViewportHeight(true);
+		tableListar.setRowSelectionAllowed(false);
+		
+		JScrollPane scrollPane = new JScrollPane(tableListar);
+		scrollPane.setBounds(10, 11, 656, 404);
+		panelListar.add(scrollPane);
 
 		/*Listeners*/
 		ActionListener seleccionartipoListener = new ActionListener() {
@@ -223,27 +233,27 @@ public class Programa extends JFrame {
 		
 		ActionListener registrarListener = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Electrodomestico item;
+				Object[] row;
 				if(cboTipoElectrodomestico.getSelectedItem().equals("Television")){
-					Television tele = new Television(
+					item = new Television(
 							(int)spnResolucion.getValue(), 
 							chkSintonizadorDTD.isSelected(), 
 							(int)spnPrecioBase.getValue(), 
 							(Color)cboColor.getSelectedItem(), 
 							(Consumo)cboConsumo.getSelectedItem(),
 							(int)spnPeso.getValue());
-					new NegocioTelevision().registrar(tele);
+					row = new NegocioTelevision().registrar((Television)item);
 				}else{
-					Lavarropas lava = new Lavarropas(
+					item = new Lavarropas(
 							(int)spnCarga.getValue(),  
 							(int)spnPrecioBase.getValue(), 
 							(Color)cboColor.getSelectedItem(), 
 							(Consumo)cboConsumo.getSelectedItem(),
 							(int)spnPeso.getValue());
-					new NegocioLavarropas().registrar(lava);
+					row = new NegocioLavarropas().registrar((Lavarropas)item);
 				}
-
-				popularLista();
+				agregarALista(row);
 			}
 		};
 		
@@ -272,6 +282,7 @@ public class Programa extends JFrame {
 						rs.getString("color"),
 						rs.getString("consumo"),
 						rs.getFloat("precio"),
+						rs.getInt("peso"),
 						rs.getInt("carga"),
 						rs.getInt("resolucion"),
 						rs.getBoolean("sintonizadorDTD")
@@ -281,13 +292,14 @@ public class Programa extends JFrame {
 			JOptionPane.showMessageDialog(null, "No se logró Cargar la tabla","Error",JOptionPane.ERROR_MESSAGE);
 		};
 		
-				tableListar = new JTable(tableModel);
-				tableListar.setBounds(0, 0, 0, 0);
-				tableListar.setFillsViewportHeight(true);
-				tableListar.setRowSelectionAllowed(false);
-				
-				JScrollPane scrollPane = new JScrollPane(tableListar);
-				scrollPane.setBounds(10, 11, 656, 404);
-				panelListar.add(scrollPane);		
 	}
+
+	private void agregarALista(Object[] row){
+		try{
+			tableModel.addRow(row);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "No se logró Cargar el elemento en la lista","Error",JOptionPane.ERROR_MESSAGE);
+		};
+	}
+	
 }

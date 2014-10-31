@@ -7,7 +7,7 @@ import datos.DatosLavarropas;
 
 public class NegocioLavarropas {
 	
-	public void registrar(Lavarropas lava)
+	public Object[] registrar(Lavarropas lava)
     {
         try
         {
@@ -18,5 +18,16 @@ public class NegocioLavarropas {
         {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+		Object[] row = {
+				"Lavarropas",
+				lava.getColor().getNombre(),
+				Character.toString(lava.getConsumo().getLetra()),
+				lava.precioFinal(),
+				lava.getPeso(),
+				lava.getCarga(),
+				"-",
+				"-"
+		};
+		return row;
     }
 }
